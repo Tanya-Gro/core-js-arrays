@@ -269,15 +269,11 @@ function distinct(arr) {
  *    createNDimensionalArray(1, 1) => [0]
  */
 function createNDimensionalArray(n, size) {
-  let count = n - 1;
-  let arr = Array(size).fill(0);
-  let totalarr = Array(size);
-  while (count > 0) {
-    totalarr = Array(size);
-    arr = totalarr.fill(arr);
-    count -= 1;
-  }
-  return arr;
+  const count = n - 1;
+  const arr = Array(size).fill(0);
+  return count === 0
+    ? arr
+    : arr.map(() => createNDimensionalArray(count, size));
 }
 
 /**
@@ -341,8 +337,11 @@ function calculateBalance(arr) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
+function createChunks(arr, chunkSize, position = 0, resultArr = []) {
+  resultArr.push(arr.slice(position, chunkSize + position));
+  return position + chunkSize >= arr.length
+    ? resultArr
+    : createChunks(arr, chunkSize, position + chunkSize, resultArr);
 }
 
 /**
@@ -357,8 +356,9 @@ function createChunks(/* arr, chunkSize */) {
  *    generateOdds(2) => [ 1, 3 ]
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len, arr = []) {
+  if (len > 0) arr.unshift(len * 2 - 1);
+  return len <= 0 ? arr : generateOdds(len - 1, arr);
 }
 
 /**
