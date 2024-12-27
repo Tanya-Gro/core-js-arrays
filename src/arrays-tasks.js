@@ -562,8 +562,10 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  if (n > 0) return [...arr.slice(arr.length - n), ...arr.slice(0, n + 1)];
+  if (n < 0) return [...arr.slice(Math.abs(n)), ...arr.slice(0, Math.abs(n))];
+  return arr;
 }
 
 /**
@@ -579,8 +581,23 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const orderNumber = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  const arrNumber = arr
+    .map((item) => orderNumber.indexOf(item))
+    .sort((a, b) => a - b);
+  return arrNumber.map((item) => orderNumber.at(item));
 }
 
 /**
@@ -602,8 +619,11 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const half = Math.floor(arr.length / 2);
+  return half * 2 === arr.length
+    ? [...arr.slice(arr.length - half), ...arr.slice(0, half)]
+    : [...arr.slice(arr.length - half), arr[half], ...arr.slice(0, half)];
 }
 
 module.exports = {
