@@ -373,8 +373,10 @@ function generateOdds(len, arr = []) {
  *   getElementByIndices(['one','two','three'], [2]) => 'three'  (arr[2])
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
-function getElementByIndices(/* arr, indices */) {
-  throw new Error('Not implemented');
+function getElementByIndices(arr, indices) {
+  if (indices.length > 1)
+    return getElementByIndices(arr[indices[0]], indices.slice(1));
+  return arr[indices[0]];
 }
 
 /**
@@ -389,8 +391,8 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.reduce((count, item) => (!item ? count + 1 : count), 0);
 }
 
 /**
@@ -411,8 +413,14 @@ function getFalsyValuesCount(/* arr */) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n, identity = 0, matrix = []) {
+  let count = identity;
+  const arr = matrix;
+  arr[count] = Array(n).fill(0);
+  arr[count][count] = 1;
+  count += 1;
+  if (count >= n) return arr;
+  return getIdentityMatrix(n, count, arr);
 }
 
 /**
@@ -426,8 +434,13 @@ function getIdentityMatrix(/* n */) {
  *    getIndicesOfOddNumbers([2, 4, 6, 8, 10]) => []
  *    getIndicesOfOddNumbers([11, 22, 33, 44, 55]) => [0, 2, 4]
  */
-function getIndicesOfOddNumbers(/* numbers */) {
-  throw new Error('Not implemented');
+function getIndicesOfOddNumbers(numbers) {
+  const arr = [];
+  numbers.map((item, index) => {
+    if (item % 2 !== 0) arr.push(index);
+    return item;
+  });
+  return arr;
 }
 
 /**
@@ -440,8 +453,10 @@ function getIndicesOfOddNumbers(/* numbers */) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map(
+    (item) => `#${item.toString(16).toUpperCase().padStart(6, '0')}`
+  );
 }
 
 /**
@@ -458,7 +473,7 @@ function getHexRGBValues(/* arr */) {
  *   getMaxItems([ 10, 2, 7, 5, 3, -5 ], 3) => [ 10, 7, 5 ]
  *   getMaxItems([ 10, 10, 10, 10 ], 3) => [ 10, 10, 10 ]
  */
-function getMaxItems(/* arr, n */) {
+function getMaxItems(arr, n) {
   throw new Error('Not implemented');
 }
 
